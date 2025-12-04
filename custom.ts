@@ -30,7 +30,7 @@ namespace smartCar {
         basic.showLeds(`
             . # # # .
             # . . . .
-            . # # # .
+            # # # # .
             . . . # .
             . # # # .
         `)
@@ -154,3 +154,4 @@ enum TurnDirection {
     Left,
     Right
 }
+
