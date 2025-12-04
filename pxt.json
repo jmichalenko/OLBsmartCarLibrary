@@ -12,7 +12,8 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "custom.ts"
+        "custom.ts",
+        "icon.png"
     ],
     "testFiles": [
         "test.ts"
