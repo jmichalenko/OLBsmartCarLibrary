@@ -1,6 +1,6 @@
 /**
  * COMPLETE SMART CAR PACKAGE
- * Includes: MPU6050 Driver + Smart Turning + Speed Control
+ * Includes: MPU6050 Driver + Smart Turning + Speed Control + Custom Graphics
  */
 
 //% color="#E63022" weight=100 icon="\uf1b9" block="Smart Car"
@@ -22,28 +22,39 @@ namespace smartCar {
     let is_initialized = false
 
     /**
+     * Shows the custom Smart Car logo on the LEDs
+     */
+    //% block="show car logo"
+    //% weight=110
+    export function showLogo() {
+        basic.showLeds(`
+            . # # # .
+            # . . . .
+            . # # # .
+            . . . # .
+            . # # # .
+        `)
+    }
+
+    /**
      * Wakes up the MPU6050 and calibrates it.
      */
     //% block="setup and calibrate gyro"
     //% weight=100
     export function setupAndCalibrate() {
-        basic.showIcon(IconNames.No) // "Don't Move!"
-        
-        // 1. WAKE UP SENSOR 
+        basic.showIcon(IconNames.No) 
         pins.i2cWriteNumber(MPU_ADDR, PWR_MGMT_1, NumberFormat.UInt8BE)
         pins.i2cWriteNumber(MPU_ADDR, 0x00, NumberFormat.UInt8BE) 
         is_initialized = true
         basic.pause(100)
 
-        // 2. CALIBRATE 
         let sum = 0
         for (let i = 0; i < 20; i++) {
             sum += readRawGyroZ()
             basic.pause(50)
         }
         gyro_offset = sum / 20
-        
-        basic.showIcon(IconNames.Yes) // "Ready!"
+        basic.showIcon(IconNames.Yes)
         basic.pause(500)
     }
 
@@ -139,8 +150,7 @@ namespace smartCar {
     }
 }
 
-// *** THIS EXPORT IS CRITICAL FOR THE DROPDOWN ***
-export enum TurnDirection {
+enum TurnDirection {
     Left,
     Right
 }
